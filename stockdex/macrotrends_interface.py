@@ -83,13 +83,15 @@ class MacrotrendsInterface(TickerBase):
         return data
 
     @property
-    def macrotrends_income_statement(self) -> pd.DataFrame:
+    def macrotrends_income_statement(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the income statement for the given ticker.
         """
         check_security_type(self.security_type, valid_types=["stock"])
         url = f"{MACROTRENDS_BASE_URL}/{self.ticker}/TBD/income-statement"
-
+        if time_freq=='Q':
+            url = url+"?freq=Q"
+        
         response = self.get_response(url)
 
         # Parse the HTML content of the website
@@ -106,13 +108,14 @@ class MacrotrendsInterface(TickerBase):
         return data
 
     @property
-    def macrotrends_balance_sheet(self) -> pd.DataFrame:
+    def macrotrends_balance_sheet(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the balance sheet for the given ticker.
         """
         check_security_type(self.security_type, valid_types=["stock"])
         url = f"{MACROTRENDS_BASE_URL}/{self.ticker}/TBD/balance-sheet"
-
+        if time_freq=='Q':
+            url = url+"?freq=Q"
         # build selenium interface object if not already built
         if not hasattr(self, "selenium_interface"):
             self.selenium_interface = selenium_interface()
@@ -130,13 +133,14 @@ class MacrotrendsInterface(TickerBase):
         return data
 
     @property
-    def macrotrends_cash_flow(self) -> pd.DataFrame:
+    def macrotrends_cash_flow(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the cash flow statement for the given ticker.
         """
         check_security_type(self.security_type, valid_types=["stock"])
         url = f"{MACROTRENDS_BASE_URL}/{self.ticker}/TBD/cash-flow-statement"
-
+        if time_freq=='Q':
+            url = url+"?freq=Q"
         # build selenium interface object if not already built
         if not hasattr(self, "selenium_interface"):
             self.selenium_interface = selenium_interface()
@@ -154,13 +158,14 @@ class MacrotrendsInterface(TickerBase):
         return data
 
     @property
-    def macrotrends_key_financial_ratios(self) -> pd.DataFrame:
+    def macrotrends_key_financial_ratios(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the key financial ratios for the given ticker.
         """
         check_security_type(self.security_type, valid_types=["stock"])
         url = f"{MACROTRENDS_BASE_URL}/{self.ticker}/TBD/financial-ratios"
-
+        if time_freq=='Q':
+            url = url+"?freq=Q"
         # build selenium interface object if not already built
         if not hasattr(self, "selenium_interface"):
             self.selenium_interface = selenium_interface()
@@ -201,17 +206,18 @@ class MacrotrendsInterface(TickerBase):
         return data
 
     @property
-    def macrotrends_operating_margin(self) -> pd.DataFrame:
+    def macrotrends_operating_margin(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the operating margin for the given ticker.
         """
         check_security_type(self.security_type, valid_types=["stock"])
         url = f"{MACROTRENDS_BASE_URL}/{self.ticker}/TBD/operating-margin"
-
+        if time_freq=='Q':
+            url = url+"?freq=Q"
         return self._find_margins_table(url, "TTM Operating Income")
 
     @property
-    def macrotrends_gross_margin(self) -> pd.DataFrame:
+    def macrotrends_gross_margin(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the gross margin for the given ticker.
         """
@@ -221,32 +227,38 @@ class MacrotrendsInterface(TickerBase):
         return self._find_margins_table(url, "Gross Margin")
 
     @property
-    def macrotrends_ebitda_margin(self) -> pd.DataFrame:
+    def macrotrends_ebitda_margin(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the EBITDA margin for the given ticker.
         """
         check_security_type(self.security_type, valid_types=["stock"])
         url = f"{MACROTRENDS_BASE_URL}/{self.ticker}/TBD/ebitda-margin"
+        if time_freq=='Q':
+            url = url+"?freq=Q"
 
         return self._find_margins_table(url, "TTM EBITDA")
 
     @property
-    def macrotrends_pre_tax_margin(self) -> pd.DataFrame:
+    def macrotrends_pre_tax_margin(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the pre-tax margin for the given ticker.
         """
         check_security_type(self.security_type, valid_types=["stock"])
         url = f"{MACROTRENDS_BASE_URL}/{self.ticker}/TBD/pre-tax-profit-margin"
+        if time_freq=='Q':
+            url = url+"?freq=Q"
 
         return self._find_margins_table(url, "TTM Pre-Tax Income")
 
     @property
-    def macrotrends_net_margin(self) -> pd.DataFrame:
+    def macrotrends_net_margin(self, time_freq=None) -> pd.DataFrame:
         """
         Retrieve the net profit margin for the given ticker.
         """
         check_security_type(self.security_type, valid_types=["stock"])
         url = f"{MACROTRENDS_BASE_URL}/{self.ticker}/TBD/net-profit-margin"
+        if time_freq=='Q':
+            url = url+"?freq=Q"
 
         return self._find_margins_table(url, "TTM Net Income")
 
